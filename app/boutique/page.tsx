@@ -1,11 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { produits } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
 
-export default function Boutique() {
+function BoutiqueContenu() {
   const searchParams = useSearchParams();
   const [categorie, setCategorie] = useState(searchParams.get("categorie") ?? "Tous");
   const [recherche, setRecherche] = useState("");
@@ -59,5 +59,13 @@ export default function Boutique() {
         </div>
       )}
     </main>
+  );
+}
+
+export default function Boutique() {
+  return (
+    <Suspense fallback={null}>
+      <BoutiqueContenu />
+    </Suspense>
   );
 }
